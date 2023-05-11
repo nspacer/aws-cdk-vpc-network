@@ -1,0 +1,243 @@
+{
+ "Resources": {
+  "customvpc47192D33": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CdkVpcNetworkStack/custom-vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/custom-vpc/Resource"
+   }
+  },
+  "EIP": {
+   "Type": "AWS::EC2::EIP",
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/EIP"
+   }
+  },
+  "internetgateway": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/internet-gateway"
+   }
+  },
+  "internetgatewayattachment": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "VpcId": {
+     "Ref": "customvpc47192D33"
+    },
+    "InternetGatewayId": {
+     "Ref": "internetgateway"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/internet-gateway-attachment"
+   }
+  },
+  "publicroutetable": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "VpcId": {
+     "Ref": "customvpc47192D33"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "public-route-table"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/public-route-table"
+   }
+  },
+  "privateroutetable": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "VpcId": {
+     "Ref": "customvpc47192D33"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "private-route-table"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/private-route-table"
+   }
+  },
+  "publicsubnet": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "VpcId": {
+     "Ref": "customvpc47192D33"
+    },
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.0.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "public-subnet"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/public-subnet"
+   }
+  },
+  "privatesubnet": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "VpcId": {
+     "Ref": "customvpc47192D33"
+    },
+    "AvailabilityZone": "us-east-1b",
+    "CidrBlock": "10.0.2.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "private-subnet"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/private-subnet"
+   }
+  },
+  "publicsubnetpublicroutetable": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "publicroutetable"
+    },
+    "SubnetId": {
+     "Ref": "publicsubnet"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/public-subnet-public-route-table"
+   }
+  },
+  "privatesubnetprivateroutetable": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "privateroutetable"
+    },
+    "SubnetId": {
+     "Ref": "privatesubnet"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/private-subnet-private-route-table"
+   }
+  },
+  "natgateway": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "SubnetId": {
+     "Ref": "publicsubnet"
+    },
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "EIP",
+      "AllocationId"
+     ]
+    }
+   },
+   "DependsOn": [
+    "EIP"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/nat-gateway"
+   }
+  },
+  "publicroutetableroute0": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "publicroutetable"
+    },
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "internetgateway"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/public-route-table-route-0"
+   }
+  },
+  "privateroutetableroute0": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "privateroutetable"
+    },
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "natgateway"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/private-route-table-route-0"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01M3QqCMBR+Fu/1ZJMeQCTCmxANb2OuEy51C3eGiPTubSbY1ff/MWAniAM+mUg8uqiXDSwVcdGFzrqjYLDUbxFmT1UXmYdzXnjIFeGokC6ccOLzVthUSu6hHVCR90ttCW+86dGryjZutrM9TY3RQnKSWvn4yv/P19pnZWi0HYUTxUytVocEjjEkwctIGY1WkRwQyh9+Aeedw7DeAAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkVpcNetworkStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

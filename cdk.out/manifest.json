@@ -1,0 +1,142 @@
+{
+  "version": "19.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CdkVpcNetworkStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkVpcNetworkStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkVpcNetworkStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://381606206112/us-east-1",
+      "properties": {
+        "templateFile": "CdkVpcNetworkStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::381606206112:role/cdk-hnb659fds-deploy-role-381606206112-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::381606206112:role/cdk-hnb659fds-cfn-exec-role-381606206112-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-381606206112-us-east-1/bb11272962a9ba5fb2b4ec22cf02338c93cadebe8615e9f3f05f9c96f4b3c7c5.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkVpcNetworkStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::381606206112:role/cdk-hnb659fds-lookup-role-381606206112-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkVpcNetworkStack.assets"
+      ],
+      "metadata": {
+        "/CdkVpcNetworkStack/custom-vpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "customvpc47192D33"
+          }
+        ],
+        "/CdkVpcNetworkStack/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EIP"
+          }
+        ],
+        "/CdkVpcNetworkStack/internet-gateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "internetgateway"
+          }
+        ],
+        "/CdkVpcNetworkStack/internet-gateway-attachment": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "internetgatewayattachment"
+          }
+        ],
+        "/CdkVpcNetworkStack/public-route-table": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "publicroutetable"
+          }
+        ],
+        "/CdkVpcNetworkStack/private-route-table": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "privateroutetable"
+          }
+        ],
+        "/CdkVpcNetworkStack/public-subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "publicsubnet"
+          }
+        ],
+        "/CdkVpcNetworkStack/private-subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "privatesubnet"
+          }
+        ],
+        "/CdkVpcNetworkStack/public-subnet-public-route-table": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "publicsubnetpublicroutetable"
+          }
+        ],
+        "/CdkVpcNetworkStack/private-subnet-private-route-table": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "privatesubnetprivateroutetable"
+          }
+        ],
+        "/CdkVpcNetworkStack/nat-gateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "natgateway"
+          }
+        ],
+        "/CdkVpcNetworkStack/public-route-table-route-0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "publicroutetableroute0"
+          }
+        ],
+        "/CdkVpcNetworkStack/private-route-table-route-0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "privateroutetableroute0"
+          }
+        ],
+        "/CdkVpcNetworkStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkVpcNetworkStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkVpcNetworkStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkVpcNetworkStack"
+    }
+  }
+}

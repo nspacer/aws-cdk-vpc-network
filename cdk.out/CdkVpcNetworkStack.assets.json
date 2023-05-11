@@ -1,0 +1,20 @@
+{
+  "version": "19.0.0",
+  "files": {
+    "bb11272962a9ba5fb2b4ec22cf02338c93cadebe8615e9f3f05f9c96f4b3c7c5": {
+      "source": {
+        "path": "CdkVpcNetworkStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "381606206112-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-381606206112-us-east-1",
+          "objectKey": "bb11272962a9ba5fb2b4ec22cf02338c93cadebe8615e9f3f05f9c96f4b3c7c5.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::381606206112:role/cdk-hnb659fds-file-publishing-role-381606206112-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
